@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz System</title>
+  <link rel="stylesheet" href="css/Quiz.css">
+</head>
+<body style="margin-top: 100px;">
+  <div class="quiz-container">
+
+    <!-- Top Section -->
+    <div class="quiz-header">
+      <h1 class="quiz-title">Quiz System : </h1>
+      <div class="quiz-info">
+        <span class="quiz-timer">Time: 00:00</span>
+        <span class="quiz-score">Score: 0</span>
+      </div>
+    </div>
+    
+    <!-- Bottom Section -->
+    <h3><span class="quiz-category"></span></h3>
+    <div class="quiz-body">
+      <div class="quiz-progress" aria-label="Progress"></div>
+      <div class="quiz-question">
+        <h2 class="question-text">Question 1: What is 2 + 2?</h2>
+      </div>
+
+      <div class="answers-container">
+        <label class="answer1">
+          <input type="checkbox" class="answer-checkbox"> 3
+        </label>
+        <label class="answer2">
+          <input type="checkbox" class="answer-checkbox"> 4
+        </label>
+        <label class="answer3">
+          <input type="checkbox" class="answer-checkbox"> 5
+        </label>
+      </div>
+
+      <div class="quiz-actions">
+        <button class="next-btn">Next</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="js/Quiz.js"></script>
+</body>
+</html>
