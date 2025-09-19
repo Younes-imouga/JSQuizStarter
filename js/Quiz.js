@@ -378,6 +378,8 @@ let questionIndex = 0;
 let scoreVal = 0;
 let time = 0;
 
+let clicked = false;
+
 const QUESTION_TIME = 30;
 
 const progressContainer = document.querySelector('.quiz-progress');
@@ -412,21 +414,26 @@ function startTimer(seconds) {
         }
         if (time <= 0) {
             stopTimer();
-            if (results[questionIndex] === undefined) {
-                results[questionIndex] = 'wrong';
-                renderProgress();
-            }
+
+            const qData = Quizzes[quizSession.category][questionIndex];
+            results[questionIndex] = {
+                question: qData.question,
+                chosen: [],          
+                correct: qData.correctAnswers,
+                status: 'wrong'
+            };
+
+            renderProgress();
+
             questionIndex += 1;
             const list = Quizzes[quizSession.category] || [];
             if (questionIndex < list.length) {
                 displayQuestion(questionIndex);
             } else {
-
-                //here i need to push my results to local host and delete the quizz from there
-
-                window.location.href = 'results.html';
+                finishQuiz();
             }
         }
+
     }, 1000);
 }
 
@@ -446,15 +453,20 @@ function renderProgress() {
     for (let i = 0; i < total; i++) {
         const seg = document.createElement('div');
         seg.className = 'segment';
-        if (results[i] === 'correct') seg.classList.add('correct');
-        else if (results[i] === 'wrong') seg.classList.add('wrong');
+
+        if (results[i]) {
+            if (results[i].status === 'correct') seg.classList.add('correct');
+            else if (results[i].status === 'wrong') seg.classList.add('wrong');
+        }
+
         progressContainer.appendChild(seg);
     }
 }
 
-function displayQuestion(idx) {
+
+function displayQuestion(index) {
     const list = Quizzes[quizSession.category] || [];
-    const item = list[idx];
+    const item = list[index];
     if (!item) return;
 
     if (answersContainer) {
@@ -463,47 +475,41 @@ function displayQuestion(idx) {
 
     const questionText = item.question;
     if (question) {
-        question.textContent = `Question ${idx + 1}: ${questionText}`;
+        question.textContent = `Question ${index + 1}: ${questionText}`;
     }
 
-    if (item.correctAnswers.length > 1) {
-        const info = document.createElement('p');
-        info.textContent = 'Multi Answer';
-        info.classList.add('multi-answer-hint');
-        if (question) question.insertAdjacentElement('afterend', info);
-    } else {
-        const oldHint = document.querySelector('.multi-answer-hint');
-        if (oldHint) oldHint.remove();
-    }
+    const oldHint = document.querySelector('.multi-hint');
+    if (oldHint) oldHint.remove();
 
     const answers = [item.answer1, item.answer2, item.answer3];
-    const inputType = item.correctAnswers.length > 1 ? 'checkbox' : 'radio';
+    
+    const inputType = item.correctAnswers.length === 1 ? 'radio' : 'checkbox';
+    
+    if (inputType === 'checkbox' && question) {
+        const hint = document.createElement('p');
+        hint.textContent = "Multiple answers";
+        hint.classList.add('multi-hint');
+        question.insertAdjacentElement('afterend', hint);
+    }
 
     answers.forEach((text, i) => {
         const label = document.createElement('label');
         label.classList.add('answer' + (i + 1));
+
         const input = document.createElement('input');
         input.type = inputType;
-        input.name = 'quiz-answer'; 
-        input.classList.add('answer-input');
+        input.name = "quiz-answer"; 
+        input.classList.add('answer-checkbox');
+
         label.appendChild(input);
         label.appendChild(document.createTextNode(' ' + text));
+
         if (answersContainer) {
             answersContainer.appendChild(label);
         }
-    });
 
-    if (nextBtn) {
-        nextBtn.disabled = true;
-    }
-
-    const inputs = answersContainer.querySelectorAll('input.answer-input');
-    inputs.forEach(input => {
         input.addEventListener('change', () => {
-            const anyChecked = [...inputs].some(inp => inp.checked);
-            if (nextBtn) {
-                nextBtn.disabled = !anyChecked;
-            }
+            clicked = true;
         });
     });
 
@@ -513,10 +519,9 @@ function displayQuestion(idx) {
 
 
 
-
 function validateAnswer(questionIndex) {
     let quiz = (Quizzes[quizSession.category] || [])[questionIndex];
-    if (!quiz) return false;
+    if (!quiz) return { isCorrect: false, chosen: [], correct: [] };
 
     let selected = [];
     if (answersContainer) {
@@ -531,46 +536,51 @@ function validateAnswer(questionIndex) {
     let correctAnswers = (quiz.correctAnswers || []).map(a => a.trim());
     let chosenAnswers = selected.map(a => a.trim());
 
-    if (chosenAnswers.length !== correctAnswers.length) return false;
+    let isCorrect = (
+        chosenAnswers.length === correctAnswers.length &&
+        correctAnswers.every(a => chosenAnswers.includes(a))
+    );
 
-    for (let answer of correctAnswers) {
-        if (!chosenAnswers.includes(answer)) {
-            return false;
-        }
-    }
-
-    return true;
+    return {
+        isCorrect,
+        chosen: chosenAnswers,
+        correct: correctAnswers
+    };
 }
+
 
 function nextQuestion() {
     stopTimer();
 
-    const isCorrect = validateAnswer(questionIndex);
-    if (isCorrect) {
+    const result = validateAnswer(questionIndex);
+
+    if (result.isCorrect) {
         const gained = calculatePoints(time);
         scoreVal += gained;
-        results[questionIndex] = 'correct';
-        if (score) {
-            score.textContent = 'Score: ' + scoreVal;
-        }
-    } else {
-        results[questionIndex] = 'wrong';
+        if (score) score.textContent = 'Score: ' + scoreVal;
     }
+
+    results[questionIndex] = {
+        question: (Quizzes[quizSession.category] || [])[questionIndex].question,
+        chosen: result.chosen,
+        correct: result.correct,
+        status: result.isCorrect ? "correct" : "wrong"
+    };
 
     renderProgress();
 
     questionIndex += 1;
-
     let list = Quizzes[quizSession.category] || [];
+
     if (questionIndex < list.length) {
         displayQuestion(questionIndex);
+
+        
+        if (questionIndex === list.length - 1 && nextBtn) {
+            nextBtn.textContent = "Validate";
+        }
     } else {
-
-        //here i need to push my results to local host and delete the quizz from there
-        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
-
-
-        window.location.href = 'results.html';
+        finishQuiz();
     }
 }
 
@@ -585,6 +595,36 @@ const nextBtn = document.querySelector('.next-btn');
 if (nextBtn) {
     nextBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        nextQuestion();
+        if (clicked) {
+            clicked = false;   
+            let list = Quizzes[quizSession.category] || [];
+            if (questionIndex < list.length) {
+                nextQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
     });
+}
+
+
+function finishQuiz() {
+    stopTimer();
+
+    const report = {
+        name: quizSession.name || "Anonymous", 
+        dateTime: new Date().toISOString(),   
+        score: scoreVal,
+        category: quizSession.category,
+        responses: results
+    };
+    
+    let reports = JSON.parse(localStorage.getItem("quizReports")) || [];
+    reports.push(report);
+    
+    localStorage.setItem("quizReports", JSON.stringify(reports));
+    
+    localStorage.removeItem("quizSession");
+    
+    window.location.href = "results.html";
 }

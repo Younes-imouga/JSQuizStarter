@@ -202,9 +202,3 @@ body {
     margin-top: 4px;
     margin-bottom: 10px;
 }
-
-.next-btn:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-  opacity: 0.6;
-}

@@ -1,0 +1,40 @@
+let reports = JSON.parse(localStorage.getItem("quizReports")) || [];
+let lastReport = reports[reports.length - 1];
+
+if (lastReport) {
+    let container = document.createElement("div");
+    container.classList.add("results-container");
+
+    container.innerHTML = `
+        <h1>Quiz Results</h1>
+        <p><strong>Name:</strong> ${lastReport.name}</p>
+        <p><strong>Category:</strong> ${lastReport.category}</p>
+        <p><strong>Score:</strong> ${lastReport.score}</p>
+        <p><strong>Date:</strong> ${new Date(lastReport.dateTime).toLocaleString()}</p>
+        <h2>Detailed Report</h2>
+    `;
+
+    lastReport.responses.forEach((r, i) => {
+        let qDiv = document.createElement("div");
+        qDiv.classList.add("question-report", r.status);
+
+        qDiv.innerHTML = `
+            <h3>Q${i + 1}: ${r.question}</h3>
+            <p><strong>Your answer:</strong> ${r.chosen.length ? r.chosen.join(", ") : "No answer"}</p>
+            <p><strong>Correct answer:</strong> ${r.correct.join(", ")}</p>
+        `;
+
+        container.appendChild(qDiv);
+    });
+
+    const printBtn = document.createElement('button');
+    printBtn.textContent = "Print / Save as PDF";
+    printBtn.id = "print-report-btn";
+
+    container.appendChild(printBtn);
+    document.body.appendChild(container);
+
+    printBtn.addEventListener('click', () => {
+        window.print();
+    });
+}

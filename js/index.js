@@ -1,4 +1,3 @@
-(function() {
   const startButton = document.querySelector('.next-btn');
   const nameInput = document.getElementById('player-name');
   const categorySelect = document.getElementById('category');
@@ -61,4 +60,30 @@
       }
     });
   }
-})(); 
+
+  function renderLeaderboard() {
+    const leaderboardList = document.getElementById('leaderboard-list');
+    if (!leaderboardList) return;
+
+    let reports = JSON.parse(localStorage.getItem('quizReports')) || [];
+
+    reports.sort((a, b) => b.score - a.score);
+
+    const top5 = reports.slice(0, 5);
+
+    leaderboardList.innerHTML = '';
+
+    top5.forEach(player => {
+      const li = document.createElement('li');
+      li.textContent = `${player.name}: ${player.score}`;
+      leaderboardList.appendChild(li);
+    });
+
+    if (top5.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = "No scores yet.";
+      leaderboardList.appendChild(li);
+    }
+  };
+
+  renderLeaderboard();

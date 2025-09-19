@@ -183,3 +183,56 @@ body.dashboard .quiz-header {
 /* Utilities */
 .hidden { display: none !important; }
 .center { text-align: center; }
+
+/* Leaderboard Container */
+.leaderboard-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  padding: 1.5rem;
+  margin-top: 2rem;
+  width: 600px;
+  max-width: 95%;
+  text-align: center;
+}
+
+.leaderboard-title {
+  font-size: 1.5rem;
+  color: #0984e3;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leaderboard-list li {
+  background: #f0f2f5;
+  margin: 0.5rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.leaderboard-list li:hover {
+  background: #dfe6e9;
+  transform: scale(1.02);
+}
+
+/* Optional: highlight top 3 */
+.leaderboard-list li:nth-child(1) {
+  background: #ffeaa7;
+}
+.leaderboard-list li:nth-child(2) {
+  background: #fab1a0;
+}
+.leaderboard-list li:nth-child(3) {
+  background: #81ecec;
+}
