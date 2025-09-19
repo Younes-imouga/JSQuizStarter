@@ -6,7 +6,10 @@ if (lastReport) {
     container.classList.add("results-container");
 
     container.innerHTML = `
-        <h1>Quiz Results</h1>
+        <div style="display: flex; justify-content: space-between;">
+            <h1 style="text-align: center;">Quiz Results</h1>
+            <a style="float: right;" href="index.html" class="home-link">Home</a>
+        </div>
         <p><strong>Name:</strong> ${lastReport.name}</p>
         <p><strong>Category:</strong> ${lastReport.category}</p>
         <p><strong>Score:</strong> ${lastReport.score}</p>

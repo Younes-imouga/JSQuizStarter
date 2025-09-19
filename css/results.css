@@ -91,3 +91,8 @@
     font-size: 1rem;
   }
 }
+
+.home-link {
+  color: #0984e3;
+  text-decoration: none;
+}
