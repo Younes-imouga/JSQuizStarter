@@ -1,0 +1,74 @@
+{
+  "technology": [
+    {
+      "question": "What does CPU stand for?",
+      "answer1": "Central Processing Unit",
+      "answer2": "Computer Personal Unit",
+      "answer3": "Central Program Unit",
+      "correctAnswers": ["Central Processing Unit"]
+    },
+    {
+      "question": "Which company developed the Android OS?",
+      "answer1": "Apple",
+      "answer2": "Google",
+      "answer3": "Microsoft",
+      "correctAnswers": ["Google"]
+    },
+    {
+      "question": "What does HTML stand for?",
+      "answer1": "Hyper Trainer Marking Language",
+      "answer2": "HyperText Markup Language",
+      "answer3": "HighText Machine Language",
+      "correctAnswers": ["HyperText Markup Language"]
+    },
+    {
+      "question": "Which device is used to input text into a computer?",
+      "answer1": "Monitor",
+      "answer2": "Keyboard",
+      "answer3": "Speaker",
+      "correctAnswers": ["Keyboard"]
+    },
+    {
+      "question": "What is the name for malicious software?",
+      "answer1": "Firmware",
+      "answer2": "Malware",
+      "answer3": "Shareware",
+      "correctAnswers": ["Malware"]
+    },
+    {
+      "question": "Which company created the iPhone?",
+      "answer1": "Apple",
+      "answer2": "Samsung",
+      "answer3": "Nokia",
+      "correctAnswers": ["Apple"]
+    },
+    {
+      "question": "Which of the following are programming languages?",
+      "answer1": "Python",
+      "answer2": "JavaScript",
+      "answer3": "Photoshop",
+      "correctAnswers": ["Python", "JavaScript"]
+    },
+    {
+      "question": "Which protocol secures data on the web?",
+      "answer1": "HTTP",
+      "answer2": "FTP",
+      "answer3": "HTTPS",
+      "correctAnswers": ["HTTPS"]
+    },
+    {
+      "question": "What does IoT stand for?",
+      "answer1": "Internet of Things",
+      "answer2": "Interface of Tech",
+      "answer3": "Input Output Tech",
+      "correctAnswers": ["Internet of Things"]
+    },
+    {
+      "question": "Which company owns GitHub?",
+      "answer1": "Google",
+      "answer2": "Microsoft",
+      "answer3": "Meta",
+      "correctAnswers": ["Microsoft"]
+    }
+  ]
+}

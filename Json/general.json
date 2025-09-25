@@ -1,0 +1,72 @@
+{ "general": [
+    { 
+        "question": "What is the capital of France?", 
+        "answer1": "Paris", 
+        "answer2": "Lyon", 
+        "answer3": "Marseille", 
+        "correctAnswers": ["Paris"] 
+    },
+    { 
+        "question": "Which ocean is the largest?", 
+        "answer1": "Pacific", 
+        "answer2": "Atlantic", 
+        "answer3": "Indian", 
+        "correctAnswers": ["Pacific"] 
+    },
+    { 
+        "question": "How many days are there in a leap year?", 
+        "answer1": "365", 
+        "answer2": "366", 
+        "answer3": "364", 
+        "correctAnswers": ["366"] 
+    },
+    { 
+        "question": "Which language has the most native speakers?", 
+        "answer1": "English", 
+        "answer2": "Mandarin Chinese", 
+        "answer3": "Spanish", 
+        "correctAnswers": ["Mandarin Chinese"] 
+    },
+    { 
+        "question": "What currency is used in Japan?", 
+        "answer1": "Yen", 
+        "answer2": "Won", 
+        "answer3": "Yuan", 
+        "correctAnswers": ["Yen"] 
+    },
+    { 
+        "question": "Which continent is Egypt in?", 
+        "answer1": "Asia", 
+        "answer2": "Africa", 
+        "answer3": "Europe", 
+        "correctAnswers": ["Africa"] 
+    },
+    { 
+        "question": "What is H2O commonly known as?", 
+        "answer1": "Salt", 
+        "answer2": "Water", 
+        "answer3": "Hydrogen", 
+        "correctAnswers": ["Water"] 
+    },
+    { 
+        "question": "Which planet is known as the Red Planet?", 
+        "answer1": "Mars", 
+        "answer2": "Jupiter", 
+        "answer3": "Venus", 
+        "correctAnswers": ["Mars"] 
+    },
+    { 
+        "question": "Which of the following are European countries?", 
+        "answer1": "France", 
+        "answer2": "Brazil", 
+        "answer3": "Germany", 
+        "correctAnswers": ["France", "Germany"] 
+    },
+    { 
+        "question": "Which instrument has keys, pedals, and strings?", 
+        "answer1": "Piano", 
+        "answer2": "Violin", 
+        "answer3": "Flute", 
+        "correctAnswers": ["Piano"] 
+    }
+]}

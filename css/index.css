@@ -15,7 +15,6 @@ body {
   color: #333;
 }
 
-/* Quiz container */
 .quiz-container {
   background: #fff;
   width: 600px;
@@ -27,7 +26,6 @@ body {
   flex-direction: column;
 }
 
-/* Header (top section) */
 .quiz-header {
   background: #0984e3;
   color: #fff;
@@ -224,4 +222,23 @@ body.dashboard .quiz-header {
 }
 .leaderboard-list li:nth-child(3) {
   background: #fab1a0;
+}
+
+#history-link {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #0984e3;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+#history-link:hover {
+    background-color: #0771c7;
+    transform: translateY(-2px);
+}
+
+#history-link:active {
+    transform: translateY(0);
 }

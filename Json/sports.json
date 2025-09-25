@@ -1,0 +1,74 @@
+{
+  "sports": [
+    {
+      "question": "How many players are on a standard soccer team on the field?",
+      "answer1": "11",
+      "answer2": "10",
+      "answer3": "9",
+      "correctAnswers": ["11"]
+    },
+    {
+      "question": "Which sport uses a shuttlecock?",
+      "answer1": "Badminton",
+      "answer2": "Tennis",
+      "answer3": "Squash",
+      "correctAnswers": ["Badminton"]
+    },
+    {
+      "question": "In basketball, how many points is a shot from beyond the arc worth?",
+      "answer1": "2",
+      "answer2": "3",
+      "answer3": "4",
+      "correctAnswers": ["3"]
+    },
+    {
+      "question": "What surface is the French Open played on?",
+      "answer1": "Grass",
+      "answer2": "Clay",
+      "answer3": "Hard court",
+      "correctAnswers": ["Clay"]
+    },
+    {
+      "question": "Which country hosted the 2016 Summer Olympics?",
+      "answer1": "Brazil",
+      "answer2": "China",
+      "answer3": "UK",
+      "correctAnswers": ["Brazil"]
+    },
+    {
+      "question": "In which sport would you perform a slam dunk?",
+      "answer1": "Volleyball",
+      "answer2": "Basketball",
+      "answer3": "Handball",
+      "correctAnswers": ["Basketball"]
+    },
+    {
+      "question": "How long is a marathon?",
+      "answer1": "42.195 km",
+      "answer2": "40.000 km",
+      "answer3": "26.195 km",
+      "correctAnswers": ["42.195 km"]
+    },
+    {
+      "question": "What is the maximum break in snooker?",
+      "answer1": "147",
+      "answer2": "155",
+      "answer3": "167",
+      "correctAnswers": ["147"]
+    },
+    {
+      "question": "Which of the following are Olympic sports?",
+      "answer1": "Swimming",
+      "answer2": "Cricket",
+      "answer3": "Tennis",
+      "correctAnswers": ["Swimming", "Tennis"]
+    },
+    {
+      "question": "In baseball, how many strikes make an out?",
+      "answer1": "2",
+      "answer2": "3",
+      "answer3": "4",
+      "correctAnswers": ["3"]
+    }
+  ]
+}
