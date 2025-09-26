@@ -8,8 +8,8 @@
 body {
   background: #f0f2f5;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: space-around;
+  align-items: center;
   min-height: 100vh;
   padding: 2rem;
   color: #333;
@@ -242,3 +242,91 @@ body.dashboard .quiz-header {
 #history-link:active {
     transform: translateY(0);
 }
+
+.home-stats {
+  width: 90%;
+  max-width: 600px;
+  margin: 2rem auto;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+.home-stats h2 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  transition: transform 0.2s ease;
+}
+
+.stat-avg-category{
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.stat-card:hover {
+  transform: scale(1.02);
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #444;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: #007bff;
+}
+
+#stat-avg-category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.avg-card {
+  flex: 1 1 100px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.avg-card:hover {
+  transform: scale(1.05);
+}
+
+.avg-label {
+  font-weight: 600;
+  color: #444;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.avg-value {
+  font-weight: 700;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+

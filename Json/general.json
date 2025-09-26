@@ -18,7 +18,7 @@
         "answer1": "365", 
         "answer2": "366", 
         "answer3": "364", 
-        "correctAnswers": ["366"] 
+        "correctAnswers": ["365","366"] 
     },
     { 
         "question": "Which language has the most native speakers?", 

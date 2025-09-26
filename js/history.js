@@ -27,10 +27,11 @@ function renderAttempt(index) {
     attemptDiv.classList.add("attempt");
 
     attemptDiv.innerHTML = `
-        <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
             <h2>Attempt ${index + 1}</h2>
             <div class="export-container">
-                <button class="export-btn" data-index="${index}">Export Attempt</button>
+                <button class="export-json-btn" data-index="${index}">Export JSON</button>
+                <button class="export-csv-btn" data-index="${index}">Export CSV</button>
             </div>
         </div>
         <p><strong>Name:</strong> ${attempt.name}</p>
@@ -60,7 +61,15 @@ function renderAttempt(index) {
 
     prevBtn.disabled = index === 0;
     nextBtn.disabled = index === reports.length - 1;
+
+    // Attach event listeners **after rendering**
+    const jsonBtn = attemptDiv.querySelector(".export-json-btn");
+    jsonBtn.addEventListener("click", () => exportJSON(index));
+
+    const csvBtn = attemptDiv.querySelector(".export-csv-btn");
+    csvBtn.addEventListener("click", () => exportCSV(index));
 }
+
 
 prevBtn.addEventListener("click", () => {
     if (currentPage > 0) {
@@ -79,19 +88,41 @@ nextBtn.addEventListener("click", () => {
 // Render first attempt initially
 renderAttempt(currentPage);
 
-let exportButtons = document.querySelectorAll(".export-btn");
+function exportJSON(index) {
+    const attempt = reports[index];
+    const reportData = JSON.stringify(attempt, null, 2);
+    const blob = new Blob([reportData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `attempt-${index + 1}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+    
+function exportCSV(index) {
+    const attempt = reports[index];
+    if (!attempt) return;
 
-exportButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        const index = parseInt(button.getAttribute("data-index"), 10);
-        const attempt = reports[index];
-        const reportData = JSON.stringify(attempt);
-        const blob = new Blob([reportData], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `attempt-${index + 1}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
+    let csvRows = [];
+    csvRows.push(["Question","Your Answer","Correct Answer","Status"].join(","));
+
+    attempt.responses.forEach(r => {
+        let row = [
+            `"${r.question}"`,
+            `"${r.chosen.join(", ")}"`,
+            `"${r.correct.join(", ")}"`,
+            `"${r.status}"`
+        ];
+        csvRows.push(row.join(","));
     });
-});
+
+    const csvData = csvRows.join("\n");
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `attempt-${index + 1}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
