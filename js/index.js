@@ -149,7 +149,7 @@ function renderStats() {
 renderStats();
 
 function displayChart(categories, data, type, ctx, title, label, max) {
-
+  
   const myChart = new Chart(ctx, {
       type: type, 
       data: {

@@ -512,6 +512,18 @@ function validateAnswer(questionIndex) {
         correctAnswers.every(a => chosenAnswers.includes(a))
     );
 
+    let QuizData = JSON.parse(localStorage.getItem("quizData")) || [];
+
+    let data = {
+        question: (Quizzes[quizSession.category] || [])[questionIndex].question,
+        chosen: chosenAnswers,
+        correct: correctAnswers
+    }
+
+    QuizData.push(data);
+
+    localStorage.setItem("quizData", JSON.stringify(QuizData));
+
     return {
         isCorrect,
         chosen: chosenAnswers,
@@ -601,7 +613,7 @@ function validateQuizFormat(data, category) {
         }
 
         if (typeof item.answer1 !== "string" ||
-            typeof item.answer2 !== "string" ||
+            typeof item.answer2 !== "string" || 
             typeof item.answer3 !== "string") {
             console.error(`Invalid format in question ${i}: 'answer1/2/3' must be strings`);
             return false;
@@ -638,69 +650,85 @@ function stopGlobalTimer() {
 }
 
 
-let quizSession = JSON.parse(localStorage.getItem('quizSession')) || {};
-
-let link = `../Json/${quizSession.category}.json`;
-
-    let category = document.querySelector('.quiz-category');
-    category.textContent = `Category: ${quizSession.category}`;
-
-    let question = document.querySelector('.question-text');
-    let answersContainer = document.querySelector('.answers-container');
-    let score = document.querySelector('.quiz-score');
-    let timer = document.querySelector('.quiz-timer');
-    const progressContainer = document.querySelector('.quiz-progress');
-    let globalTimerElem = document.querySelector('.quiz-global-timer');
-    let timerInterval;
-
-    let questionIndex = 0;
-    let scoreVal = 0;
-    let time = 0;
-
-    let clicked = false;
-
-    const QUESTION_TIME = 30;
-
-    let results = [];
-
-    let globalTimerInterval;
-    let globalSeconds = 0;
 
 
-fetch(link)
-    .then(response => response.json())
-    .then(data => {
-        validateQuizFormat(data, quizSession.category);
 
-        Quizzes = data;
+if (quizSession) {
 
-        if (!quizSession.category) {
-            location.href = 'index.html';
-        }
+    let quizSession = JSON.parse(localStorage.getItem('quizSession')) || {};
+    let link = `../Json/${quizSession.category}.json`;
 
-        if (score) {
-            score.textContent = 'Score: 0';
-        }
+        let category = document.querySelector('.quiz-category');
+        category.textContent = `Category: ${quizSession.category}`;
 
-        startGlobalTimer();
-        displayQuestion(0);
-        renderProgress();
+        let question = document.querySelector('.question-text');
+        let answersContainer = document.querySelector('.answers-container');
+        let score = document.querySelector('.quiz-score');
+        let timer = document.querySelector('.quiz-timer');
+        const progressContainer = document.querySelector('.quiz-progress');
+        let globalTimerElem = document.querySelector('.quiz-global-timer');
+        let timerInterval;
 
-        const nextBtn = document.querySelector('.next-btn');
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                if (clicked) {
-                    clicked = false;
-                    let list = Quizzes[quizSession.category] || [];
-                    if (questionIndex < list.length) {
-                        nextQuestion();
-                    } else {
-                        finishQuiz();
+        let questionIndex = 0;
+        let scoreVal = 0;
+        let time = 0;
+
+        let clicked = false;
+
+        const QUESTION_TIME = 30;
+
+        let results = [];
+
+        let globalTimerInterval;
+        let globalSeconds = 0;
+
+
+    fetch(link)
+        .then(response => response.json())
+        .then(data => {
+            validateQuizFormat(data, quizSession.category);
+
+            Quizzes = data;
+
+            if (!quizSession.category) {
+                location.href = 'index.html';
+            }
+
+            if (score) {
+                score.textContent = 'Score: 0';
+            }
+            let QuizData = {
+                category: quizSession.category,
+                question: [],
+                chosen: [],
+                correct: [],
+                status: []
+            }
+            localStorage.setItem("quizData", JSON.stringify(QuizData));
+
+
+            startGlobalTimer();
+            displayQuestion(0);
+            renderProgress();
+
+            const nextBtn = document.querySelector('.next-btn');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (clicked) {
+                        clicked = false;
+                        let list = Quizzes[quizSession.category] || [];
+                        if (questionIndex < list.length) {
+                            nextQuestion();
+                        } else {
+                            finishQuiz();
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
-    })
-    .catch(err => console.error(err));
+        })
+        .catch(err => console.error(err));
+} else {
+
+}
