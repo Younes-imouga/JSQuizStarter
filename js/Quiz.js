@@ -656,8 +656,11 @@ function stopGlobalTimer() {
         // getting the github link and putting it in a variable so the link will work like in localHost
         const currentUrl = window.location.href;
         const urlParts = currentUrl.split('/'); 
-        const baseUrl = urlParts.slice(0, 4).join('/') + '/';
-        const link = `${baseUrl}Json/${quizSession.category}.json`;
+        const baseUrl = urlParts.slice(0, urlParts.length - 1).join('/');
+        const link = `${baseUrl}/Json/${quizSession.category}.json`;
+
+        // for testing in local
+
 
 
         let category = document.querySelector('.quiz-category');
