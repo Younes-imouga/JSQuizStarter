@@ -652,17 +652,13 @@ function stopGlobalTimer() {
 }
 
     let quizSession = JSON.parse(localStorage.getItem('quizSession')) || {};
-const currentUrl = window.location.href;
 
-const urlParts = currentUrl.split('/'); 
+        // getting the github link and putting it in a variable so the link will work like in localHost
+        const currentUrl = window.location.href;
+        const urlParts = currentUrl.split('/'); 
+        const baseUrl = urlParts.slice(0, 4).join('/') + '/';
+        const link = `${baseUrl}Json/${quizSession.category}.json`;
 
-const baseUrl = urlParts.slice(0, 4).join('/') + '/';
-
-const link = `${baseUrl}Json/${quizSession.category}.json`;
-
-console.log("current url:", currentUrl);
-console.log("url parts:", urlParts);
-console.log("Loading quiz JSON from:", link);
 
         let category = document.querySelector('.quiz-category');
         category.textContent = `Category: ${quizSession.category}`;
