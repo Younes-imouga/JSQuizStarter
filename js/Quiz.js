@@ -652,7 +652,13 @@ function stopGlobalTimer() {
 }
 
     let quizSession = JSON.parse(localStorage.getItem('quizSession')) || {};
-let link = new URL(`../Json/${quizSession.category}.json`, window.location.href).href;
+const currentUrl = window.location.href;
+
+const urlParts = currentUrl.split('/'); 
+
+const baseUrl = urlParts.slice(0, 4).join('/') + '/';
+
+const link = `${baseUrl}Json/${quizSession.category}.json`;
 
 console.log("Loading quiz JSON from:", link);
 
