@@ -359,6 +359,8 @@ let Quizzes = {
     // ]
 };
 
+let QuizData = JSON.parse(localStorage.getItem("quizData")) || [];
+
 function formatTime(totalSeconds) {
     const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
     const s = (totalSeconds % 60).toString().padStart(2, '0');
@@ -512,16 +514,14 @@ function validateAnswer(questionIndex) {
         correctAnswers.every(a => chosenAnswers.includes(a))
     );
 
-    let QuizData = JSON.parse(localStorage.getItem("quizData")) || [];
-
+    // Save to QuizData
     let data = {
-        question: (Quizzes[quizSession.category] || [])[questionIndex].question,
+        question: quiz.question,
         chosen: chosenAnswers,
         correct: correctAnswers
-    }
+    };
 
     QuizData.push(data);
-
     localStorage.setItem("quizData", JSON.stringify(QuizData));
 
     return {
@@ -530,6 +530,7 @@ function validateAnswer(questionIndex) {
         correct: correctAnswers
     };
 }
+
 
 function nextQuestion() {
     stopTimer();
@@ -577,14 +578,15 @@ function finishQuiz() {
         score: scoreVal,
         category: quizSession.category,
         totalTime: globalSeconds,
-        responses: results
+        responses: results,
     };
 
     let reports = JSON.parse(localStorage.getItem("quizReports")) || [];
     reports.push(report);
-
     localStorage.setItem("quizReports", JSON.stringify(reports));
 
+    // Clean up temp data
+    localStorage.removeItem("quizData");
     localStorage.removeItem("quizSession");
 
     window.location.href = "results.html";
@@ -648,12 +650,6 @@ function stopGlobalTimer() {
         globalTimerInterval = null;
     }
 }
-
-
-
-
-
-if (quizSession) {
 
     let quizSession = JSON.parse(localStorage.getItem('quizSession')) || {};
     let link = `../Json/${quizSession.category}.json`;
@@ -729,6 +725,3 @@ if (quizSession) {
 
         })
         .catch(err => console.error(err));
-} else {
-
-}
