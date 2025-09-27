@@ -660,6 +660,8 @@ const baseUrl = urlParts.slice(0, 4).join('/') + '/';
 
 const link = `${baseUrl}Json/${quizSession.category}.json`;
 
+console.log("current url:", currentUrl);
+console.log("url parts:", urlParts);
 console.log("Loading quiz JSON from:", link);
 
         let category = document.querySelector('.quiz-category');
