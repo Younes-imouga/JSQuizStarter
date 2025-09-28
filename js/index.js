@@ -88,6 +88,57 @@
 
   renderLeaderboard();
 
+  function checkIncompleteQuiz() {
+  const quizData = JSON.parse(localStorage.getItem("quizData"));
+  const quizSession = JSON.parse(localStorage.getItem("quizSession"));
+
+  // check if i have an incompleted quiz
+  if (quizData && quizSession && quizSession.category) {
+    const container = document.querySelector(".quiz-body");
+
+    const continueBox = document.createElement("div");
+    continueBox.classList.add("continue-box");
+    continueBox.innerHTML = `
+      <h3>You have an unfinished quiz in <strong>${quizSession.category}</strong></h3>
+      <button id="continue-btn">Continue Quiz</button>
+      <button id="discard-btn">Discard Quiz</button>
+    `;
+
+    container.insertBefore(continueBox, container.firstChild);
+
+    document.getElementById("continue-btn").addEventListener("click", () => {
+      window.location.href = "Quiz.html";
+    });
+
+    document.getElementById("discard-btn").addEventListener("click", () => {
+      localStorage.removeItem("quizData");
+      localStorage.removeItem("quizSession");
+      continueBox.remove();
+    });
+  }
+}
+
+checkIncompleteQuiz();
+
+function persistAndGo(nameVal, categoryVal) {
+  // Clear old quiz data if exists
+  localStorage.removeItem("quizData");
+  localStorage.removeItem("quizSession");
+  localStorage.removeItem("quizResults");
+  localStorage.removeItem("questionIndex");
+
+  const session = {
+    name: nameVal,
+    category: categoryVal,
+  };
+  try {
+    localStorage.setItem("quizSession", JSON.stringify(session));
+  } catch (_) {}
+  window.location.href = "Quiz.html";
+}
+
+
+
 function renderStats() {
   const reports = JSON.parse(localStorage.getItem("quizReports")) || [];
 
@@ -112,7 +163,7 @@ function renderStats() {
   statAverage.textContent = avgScore;
 
   // Average score by category
-  const categories = [...new Set(reports.map(r => r.category))]; // unique categories
+  const categories = [...new Set(reports.map(r => r.category))];
 
   let catAvg = [];
   let catAttempts = [];
