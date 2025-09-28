@@ -7,55 +7,81 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+    <div class="quiz-container" style="margin-top: 100px;">
 
-  <div class="quiz-container" style="margin-top: 100px;">
-
-    <!-- Header / Top Section -->
-    <div class="quiz-header">
-      <h1 class="quiz-title">Welcome to the Quiz System</h1>
-    </div>
-
-    <!-- Body / Bottom Section -->
-    <div class="quiz-body">
-
-      <!-- Player Info -->
-      <form class="form" id="player-form">
-        <div class="form-field">
-          <label for="player-name" class="form-label">Name or alias</label>
-          <input type="text" id="player-name" class="form-input" placeholder="e.g. Sam or TheWizard" autocomplete="name">
-        </div>
-      </form>
-
-      <!-- Category Selection -->
-      <form class="form" id="category-form">
-        <div class="form-field">
-          <label for="category" class="form-label">Select category</label>
-          <select id="category" class="form-input">
-            <option value="" selected disabled>-- Choose a category --</option>
-            <option value="general">General Knowledge</option>
-            <option value="science">Science</option>
-            <option value="history">History</option>
-            <option value="technology">Technology</option>
-            <option value="sports">Sports</option>
-          </select>
-        </div>
-      </form>
-
-      <!-- Start Button -->
-      <div class="quiz-actions">
-        <button class="next-btn">Start Quiz</button>
+      <!-- Header / Top Section -->
+      <div class="quiz-header">
+        <h1 class="quiz-title">Welcome to the Quiz System</h1>
+        <a href="history.html" id="history-link">View Quiz History</a>
       </div>
 
-      <div class="leaderboard-container">
-        <h2 class="leaderboard-title">Top 5 Players</h2>
-        <ol id="leaderboard-list" class="leaderboard-list"></ol>
+      <!-- Body / Bottom Section -->
+      <div class="quiz-body">
+
+        <!-- Player Info -->
+        <form class="form" id="player-form">
+          <div class="form-field">
+            <label for="player-name" class="form-label">Name or alias</label>
+            <input type="text" id="player-name" class="form-input" placeholder="e.g. Sam or TheWizard" autocomplete="name">
+          </div>
+        </form>
+
+        <!-- Category Selection -->
+        <form class="form" id="category-form">
+          <div class="form-field">
+            <label for="category" class="form-label">Select category</label>
+            <select id="category" class="form-input">
+              <option value="" selected disabled>-- Choose a category --</option>
+              <option value="general">General Knowledge</option>
+              <option value="science">Science</option>
+              <option value="history">History</option>
+              <option value="technology">Technology</option>
+              <option value="sports">Sports</option>
+            </select>
+          </div>
+        </form>
+
+        <!-- Start Button -->
+        <div class="quiz-actions">
+          <button class="next-btn">Start Quiz</button>
+        </div>
+
+          <div class="home-stats">
+            <h2>Statistics</h2>
+            <div class="stat-card">
+              <span class="stat-label">Total attempts:</span>
+              <span class="stat-value" id="stat-total">0</span>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Average score (all):</span>
+              <span class="stat-value" id="stat-average">0</span>
+            </div>
+
+            <div class="stat-card stat-avg-category">
+              <span class="stat-label">Average by category:</span>
+              <div class="stat-value" id="stat-avg-category">-</div>
+            </div>
+          </div>
+
+        <div class="leaderboard-container">
+          <h2 class="leaderboard-title">Top 5 Players</h2>
+          <ol id="leaderboard-list" class="leaderboard-list"></ol>
+        </div>
+
+        <div class="chart-container" style="width: 400px; margin: 2rem auto;">
+          <canvas id="myChart"></canvas>
+        </div>
+        <div class="chart-container" style="width: 400px; margin: 2rem auto;">
+          <canvas id="myChart2"></canvas>
+        </div>
+
+
       </div>
-
-
-
     </div>
-  </div>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/index.js"></script>
 </body>
 </html>

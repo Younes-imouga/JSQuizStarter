@@ -1,0 +1,74 @@
+{
+  "science": [
+    {
+      "question": "What gas do plants primarily absorb for photosynthesis?",
+      "answer1": "Oxygen",
+      "answer2": "Carbon dioxide",
+      "answer3": "Nitrogen",
+      "correctAnswers": ["Carbon dioxide"]
+    },
+    {
+      "question": "What is the chemical symbol for gold?",
+      "answer1": "Ag",
+      "answer2": "Au",
+      "answer3": "Gd",
+      "correctAnswers": ["Au"]
+    },
+    {
+      "question": "How many bones are in the adult human body?",
+      "answer1": "206",
+      "answer2": "205",
+      "answer3": "210",
+      "correctAnswers": ["206"]
+    },
+    {
+      "question": "What part of the cell contains genetic material?",
+      "answer1": "Mitochondria",
+      "answer2": "Nucleus",
+      "answer3": "Ribosome",
+      "correctAnswers": ["Nucleus"]
+    },
+    {
+      "question": "What force keeps planets in orbit around the sun?",
+      "answer1": "Magnetism",
+      "answer2": "Friction",
+      "answer3": "Gravity",
+      "correctAnswers": ["Gravity"]
+    },
+    {
+      "question": "What is the boiling point of water at sea level?",
+      "answer1": "100°C",
+      "answer2": "90°C",
+      "answer3": "80°C",
+      "correctAnswers": ["100°C"]
+    },
+    {
+      "question": "Which vitamin is produced when skin is exposed to sunlight?",
+      "answer1": "Vitamin C",
+      "answer2": "Vitamin D",
+      "answer3": "Vitamin B12",
+      "correctAnswers": ["Vitamin D"]
+    },
+    {
+      "question": "Which of the following are noble gases?",
+      "answer1": "Helium",
+      "answer2": "Oxygen",
+      "answer3": "Neon",
+      "correctAnswers": ["Helium", "Neon"]
+    },
+    {
+      "question": "Which particle has a negative charge?",
+      "answer1": "Proton",
+      "answer2": "Neutron",
+      "answer3": "Electron",
+      "correctAnswers": ["Electron"]
+    },
+    {
+      "question": "What is the most abundant gas in Earth's atmosphere?",
+      "answer1": "Oxygen",
+      "answer2": "Nitrogen",
+      "answer3": "Carbon dioxide",
+      "correctAnswers": ["Nitrogen"]
+    }
+  ]
+}

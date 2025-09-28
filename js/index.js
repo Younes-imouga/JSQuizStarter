@@ -87,3 +87,162 @@
   };
 
   renderLeaderboard();
+
+  function checkIncompleteQuiz() {
+  const quizData = JSON.parse(localStorage.getItem("quizData"));
+  const quizSession = JSON.parse(localStorage.getItem("quizSession"));
+
+  // check if i have an incompleted quiz
+  if (quizData && quizSession && quizSession.category) {
+    const container = document.querySelector(".quiz-body");
+
+    const continueBox = document.createElement("div");
+    continueBox.classList.add("continue-box");
+    continueBox.innerHTML = `
+      <h3>You have an unfinished quiz in <strong>${quizSession.category}</strong></h3>
+      <button id="continue-btn">Continue Quiz</button>
+      <button id="discard-btn">Discard Quiz</button>
+    `;
+
+    container.insertBefore(continueBox, container.firstChild);
+
+    document.getElementById("continue-btn").addEventListener("click", () => {
+      window.location.href = "Quiz.html";
+    });
+
+    document.getElementById("discard-btn").addEventListener("click", () => {
+      localStorage.removeItem("quizData");
+      localStorage.removeItem("quizSession");
+      continueBox.remove();
+    });
+  }
+}
+
+checkIncompleteQuiz();
+
+function persistAndGo(nameVal, categoryVal) {
+  // Clear old quiz data if exists
+  localStorage.removeItem("quizData");
+  localStorage.removeItem("quizSession");
+  localStorage.removeItem("quizResults");
+  localStorage.removeItem("questionIndex");
+
+  const session = {
+    name: nameVal,
+    category: categoryVal,
+  };
+  try {
+    localStorage.setItem("quizSession", JSON.stringify(session));
+  } catch (_) {}
+  window.location.href = "Quiz.html";
+}
+
+
+
+function renderStats() {
+  const reports = JSON.parse(localStorage.getItem("quizReports")) || [];
+
+  const statTotal = document.getElementById("stat-total");
+  const statAverage = document.getElementById("stat-average");
+  const statAvgCategory = document.getElementById("stat-avg-category");
+
+  if (!reports.length) {
+    statTotal.textContent = "0";
+    statAverage.textContent = "0";
+    statAvgCategory.innerHTML = "-";
+    return;
+  }
+
+  // Total attempts
+  statTotal.textContent = reports.length;
+
+  // Average score across all
+  const avgScore = (
+    reports.reduce((sum, r) => sum + r.score, 0) / reports.length
+  ).toFixed(2);
+  statAverage.textContent = avgScore;
+
+  // Average score by category
+  const categories = [...new Set(reports.map(r => r.category))];
+
+  let catAvg = [];
+  let catAttempts = [];
+
+  const avgHtml = categories
+    .map(cat => {
+      const catReports = reports.filter(r => r.category === cat);
+      const avg = (
+        catReports.reduce((sum, r) => sum + r.score, 0) / catReports.length
+      ).toFixed(2);
+
+      catAvg.push(avg);
+      catAttempts.push(catReports.length);
+      
+      return `
+        <div class="avg-card">
+          <span class="avg-label">${cat}:</span>
+          <span class="avg-value">${avg}</span>
+        </div>
+      `;
+    })
+    .join("");
+
+  statAvgCategory.innerHTML = avgHtml;
+
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const ctx2 = document.getElementById('myChart2').getContext('2d');
+
+  displayChart(categories, catAvg, "bar", ctx, "Average Score per Category", "Average Score", 1000);
+  displayChart(categories, catAttempts, "line", ctx2, "Total Attempts per Category", "Total Attempts", reports.length + 1);
+
+}
+
+renderStats();
+
+function displayChart(categories, data, type, ctx, title, label, max) {
+  
+  const myChart = new Chart(ctx, {
+      type: type, 
+      data: {
+          labels: categories,
+          datasets: [{
+              label: label,
+              data: data,
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.6)',
+                  'rgba(255, 99, 132, 0.6)',
+                  'rgba(255, 206, 86, 0.6)',
+                  'rgba(75, 192, 192, 0.6)',
+                  'rgba(153, 102, 255, 0.6)'
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  display: true,
+                  position: 'top'
+              },
+              title: {
+                  display: true,
+                  text: title
+              }
+          },
+          scales: {
+              y: {
+                  beginAtZero: true,
+                  max: max
+              }
+          }
+      }
+  });
+}

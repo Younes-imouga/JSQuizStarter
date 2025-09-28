@@ -1,0 +1,74 @@
+{
+  "history": [
+    {
+      "question": "Who was the first President of the United States?",
+      "answer1": "George Washington",
+      "answer2": "Abraham Lincoln",
+      "answer3": "Thomas Jefferson",
+      "correctAnswers": ["George Washington"]
+    },
+    {
+      "question": "In which year did World War II end?",
+      "answer1": "1945",
+      "answer2": "1944",
+      "answer3": "1939",
+      "correctAnswers": ["1945"]
+    },
+    {
+      "question": "Which ancient civilization built the pyramids at Giza?",
+      "answer1": "Romans",
+      "answer2": "Egyptians",
+      "answer3": "Mayans",
+      "correctAnswers": ["Egyptians"]
+    },
+    {
+      "question": "Who wrote the Declaration of Independence?",
+      "answer1": "Benjamin Franklin",
+      "answer2": "Thomas Jefferson",
+      "answer3": "James Madison",
+      "correctAnswers": ["Thomas Jefferson"]
+    },
+    {
+      "question": "What wall fell in 1989 symbolizing the end of the Cold War?",
+      "answer1": "Great Wall of China",
+      "answer2": "Berlin Wall",
+      "answer3": "Hadrian's Wall",
+      "correctAnswers": ["Berlin Wall"]
+    },
+    {
+      "question": "Which empire was ruled by Genghis Khan?",
+      "answer1": "Ottoman Empire",
+      "answer2": "Mongol Empire",
+      "answer3": "Roman Empire",
+      "correctAnswers": ["Mongol Empire"]
+    },
+    {
+      "question": "What ship sank in 1912 after hitting an iceberg?",
+      "answer1": "Lusitania",
+      "answer2": "Titanic",
+      "answer3": "Britannic",
+      "correctAnswers": ["Titanic"]
+    },
+    {
+      "question": "Who was known as the Maid of Orléans?",
+      "answer1": "Cleopatra",
+      "answer2": "Joan of Arc",
+      "answer3": "Marie Curie",
+      "correctAnswers": ["Joan of Arc"]
+    },
+    {
+      "question": "Which of the following occurred in the 20th century?",
+      "answer1": "World War I",
+      "answer2": "Renaissance",
+      "answer3": "Moon Landing",
+      "correctAnswers": ["World War I", "Moon Landing"]
+    },
+    {
+      "question": "Which revolution began in 1789?",
+      "answer1": "American Revolution",
+      "answer2": "French Revolution",
+      "answer3": "Russian Revolution",
+      "correctAnswers": ["French Revolution"]
+    }
+  ]
+}

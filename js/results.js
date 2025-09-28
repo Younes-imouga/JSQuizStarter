@@ -13,6 +13,7 @@ if (lastReport) {
         <p><strong>Name:</strong> ${lastReport.name}</p>
         <p><strong>Category:</strong> ${lastReport.category}</p>
         <p><strong>Score:</strong> ${lastReport.score}</p>
+        <p><strong>Total Time:</strong> ${formatTime(lastReport.totalTime || 0)}</p>
         <p><strong>Date:</strong> ${new Date(lastReport.dateTime).toLocaleString()}</p>
         <h2>Detailed Report</h2>
     `;
@@ -40,4 +41,10 @@ if (lastReport) {
     printBtn.addEventListener('click', () => {
         window.print();
     });
+}
+
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`;
 }
