@@ -22,7 +22,6 @@ function renderAttempt(index) {
     }
 
     const attempt = reports[index];
-
     const attemptDiv = document.createElement("div");
     attemptDiv.classList.add("attempt");
 
@@ -51,24 +50,42 @@ function renderAttempt(index) {
             <p><strong>Your answer:</strong> ${r.chosen.length ? r.chosen.join(", ") : "No answer"}</p>
             <p><strong>Correct answer(s):</strong> ${r.correct.join(", ")}</p>
         `;
-
         attemptDiv.appendChild(questionDiv);
     });
+
+    // ✅ Revision button only if there are wrong answers
+    if (attempt.responses.some(r => r.status === "wrong")) {
+        const revBtn = document.createElement("button");
+        revBtn.textContent = "Revision Quiz";
+        revBtn.classList.add("rev-btn");
+
+        revBtn.addEventListener("click", () => {
+
+            localStorage.setItem("quizSession", JSON.stringify({
+                name: attempt.name,
+                category: attempt.category,
+                revision: attempt.responses.filter(r => r.status === "wrong")
+            }));
+            window.location.href = "quiz.html";
+
+        });
+
+        attemptDiv.appendChild(revBtn);
+    }
 
     attemptContainer.appendChild(attemptDiv);
 
     pageIndicator.textContent = `${index + 1} / ${reports.length}`;
-
     prevBtn.disabled = index === 0;
     nextBtn.disabled = index === reports.length - 1;
 
-    // Attach event listeners **after rendering**
     const jsonBtn = attemptDiv.querySelector(".export-json-btn");
     jsonBtn.addEventListener("click", () => exportJSON(index));
 
     const csvBtn = attemptDiv.querySelector(".export-csv-btn");
     csvBtn.addEventListener("click", () => exportCSV(index));
 }
+
 
 
 prevBtn.addEventListener("click", () => {
