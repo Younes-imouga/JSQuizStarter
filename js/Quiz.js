@@ -1,5 +1,5 @@
 let Quizzes = {};
-
+let originalQuizzes = {};
 let QuizData = JSON.parse(localStorage.getItem("quizData")) || [];
 
 function formatTime(totalSeconds) {
@@ -304,6 +304,7 @@ function stopGlobalTimer() {
         const currentUrl = window.location.href;
         const urlParts = currentUrl.split('/'); 
         const baseUrl = urlParts.slice(0, urlParts.length - 1).join('/');
+
         const link = `${baseUrl}/Json/${quizSession.category}.json`;
 
         // for testing in local
@@ -335,57 +336,48 @@ function stopGlobalTimer() {
         let globalSeconds = 0;
 
 
-    fetch(link)
-        .then(response => response.json())
-        .then(data => {
-            validateQuizFormat(data, quizSession.category);
+fetch(link)
+    .then(response => response.json())
+    .then(data => {
+        validateQuizFormat(data, quizSession.category);
+        originalQuizzes = JSON.parse(JSON.stringify(data)); // deep copy
+        Quizzes = data;
 
-            Quizzes = data;
+        if (!quizSession.category) location.href = 'index.html';
 
-            if (!quizSession.category) {
-                location.href = 'index.html';
-            }
+        if (score) score.textContent = 'Score: 0';
 
-            if (score) {
-                score.textContent = 'Score: 0';
-            }
-            let QuizData = {
-                category: quizSession.category,
-                question: [],
-                chosen: [],
-                correct: [],
-                status: []
-            }
-            localStorage.setItem("quizData", JSON.stringify(QuizData));
+        let QuizData = [];
+        localStorage.setItem("quizData", JSON.stringify(QuizData));
 
-            // Restore progress
-            let savedIndex = localStorage.getItem("questionIndex");
-            if (savedIndex !== null) {
-                questionIndex = parseInt(savedIndex, 10);
-            }
+        // --- REVISION MODE ---
+        if (quizSession.revision && quizSession.revision.length > 0) {
+            Quizzes[quizSession.category] = quizSession.revision.map(r => {
+                return originalQuizzes[quizSession.category].find(q => q.question === r.question);
+            }).filter(q => q); // filter out undefined if not found
+        }
 
-            let savedResults = JSON.parse(localStorage.getItem("quizResults")) || [];
-            results = savedResults;
+        // Restore progress
+        const savedIndex = localStorage.getItem("questionIndex");
+        if (savedIndex !== null) questionIndex = parseInt(savedIndex, 10);
 
-            startGlobalTimer();
-            displayQuestion(questionIndex);
-            renderProgress();
+        results = JSON.parse(localStorage.getItem("quizResults")) || [];
 
-            const nextBtn = document.querySelector('.next-btn');
-            if (nextBtn) {
-                nextBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if (clicked) {
-                        clicked = false;
-                        let list = Quizzes[quizSession.category] || [];
-                        if (questionIndex < list.length) {
-                            nextQuestion();
-                        } else {
-                            finishQuiz();
-                        }
-                    }
-                });
-            }
+        startGlobalTimer();
+        displayQuestion(questionIndex);
+        renderProgress();
 
-        })
-        .catch(err => console.error(err));
+        const nextBtn = document.querySelector('.next-btn');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (clicked) {
+                    clicked = false;
+                    const list = Quizzes[quizSession.category] || [];
+                    if (questionIndex < list.length) nextQuestion();
+                    else finishQuiz();
+                }
+            });
+        }
+    })
+    .catch(err => console.error(err));
